@@ -1,12 +1,13 @@
 package com.cml.filestorage.controller;
 
 import com.cml.filestorage.dto.FileRequestGetDto;
+import com.cml.filestorage.dto.FileRequestUploadDto;
 import com.cml.filestorage.dto.FileResponseOkDto;
 import com.cml.filestorage.dto.FileResponseUploadDto;
-import com.cml.filestorage.dto.FileRequestUploadDto;
 import com.cml.filestorage.mapper.FileMapper;
 import com.cml.filestorage.model.File;
 import com.cml.filestorage.service.FileService;
+import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/file")
@@ -30,28 +29,29 @@ public class FileController {
     }
 
     @PostMapping
-    public FileResponseUploadDto uploadFile(@RequestBody FileRequestUploadDto fileRequestUploadDto) {
+    public FileResponseUploadDto uploadFile(
+            @RequestBody FileRequestUploadDto fileRequestUploadDto) {
         File file = fileService.save(fileMapper.map(fileRequestUploadDto));
         return fileMapper.mapResponse(file);
     }
 
-    @DeleteMapping("/{Id}")
-    public FileResponseOkDto deleteFile(@PathVariable String Id){
-        fileService.deleteById(Id);
+    @DeleteMapping("/{id}")
+    public FileResponseOkDto deleteFile(@PathVariable String id) {
+        fileService.deleteById(id);
         return new FileResponseOkDto();
     }
 
-    @PostMapping("/{Id}/tags")
-    public FileResponseOkDto assignTags(@PathVariable String Id,
+    @PostMapping("/{id}/tags")
+    public FileResponseOkDto assignTags(@PathVariable String id,
                            @RequestBody List<String> tags) {
-        fileService.assignTags(Id, tags);
+        fileService.assignTags(id, tags);
         return new FileResponseOkDto();
     }
 
-    @DeleteMapping("/{Id}/tags")
-    public FileResponseOkDto removeTags(@PathVariable String Id,
+    @DeleteMapping("/{id}/tags")
+    public FileResponseOkDto removeTags(@PathVariable String id,
                            @RequestBody List<String> tags) {
-        fileService.removeTags(Id, tags);
+        fileService.removeTags(id, tags);
         return new FileResponseOkDto();
     }
 

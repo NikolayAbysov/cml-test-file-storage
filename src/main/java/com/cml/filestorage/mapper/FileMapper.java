@@ -5,10 +5,9 @@ import com.cml.filestorage.dto.FileRequestGetDto;
 import com.cml.filestorage.dto.FileRequestUploadDto;
 import com.cml.filestorage.dto.FileResponseUploadDto;
 import com.cml.filestorage.model.File;
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component
 public class FileMapper {
@@ -30,18 +29,18 @@ public class FileMapper {
         return dto;
     }
 
-    public FileResponseUploadDto mapResponse(File file) {
-        FileResponseUploadDto dto = new FileResponseUploadDto();
-        dto.setId(file.getId());
-        return dto;
-    }
-
     private FileDto map(File file) {
         FileDto dto = new FileDto();
         dto.setId(file.getId());
         dto.setName(file.getName());
         dto.setSize(file.getSize());
         dto.setTags(file.getTagList());
+        return dto;
+    }
+
+    public FileResponseUploadDto mapResponse(File file) {
+        FileResponseUploadDto dto = new FileResponseUploadDto();
+        dto.setId(file.getId());
         return dto;
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(FileDoesNotExistsException.class)
-    public ResponseEntity<CustomErrorResponse> springHandleNotFound(Exception ex){
+    public ResponseEntity<CustomErrorResponse> springHandleNotFound(Exception ex) {
         CustomErrorResponse errors = new CustomErrorResponse();
         errors.setError(ex.getMessage());
         errors.setSuccess("false");
@@ -21,7 +21,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler({InvalidInputException.class, TagDoesNotExistsException.class})
-    public ResponseEntity<CustomErrorResponse> springHandleBadRequest(Exception ex){
+    public ResponseEntity<CustomErrorResponse> springHandleBadRequest(Exception ex) {
         CustomErrorResponse errors = new CustomErrorResponse();
         errors.setError(ex.getMessage());
         errors.setSuccess("false");

@@ -6,9 +6,9 @@ import com.cml.filestorage.exception.TagDoesNotExistsException;
 import com.cml.filestorage.model.File;
 import com.cml.filestorage.repository.ElasticFileRepository;
 import com.cml.filestorage.service.FileService;
-import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Service;
 
 @Service
 public class FileServiceImpl implements FileService {
@@ -72,6 +72,9 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public List<File> findByTagList(List<String> tagList) {
+        if (tagList.isEmpty()) {
+            return fileRepository.findAll();
+        }
         return fileRepository.getFilesByTagListIn(tagList);
     }
 }

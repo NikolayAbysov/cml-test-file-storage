@@ -1,8 +1,6 @@
 package com.cml.filestorage.service;
 
 import com.cml.filestorage.model.File;
-
-import java.io.FileNotFoundException;
 import java.util.List;
 
 public interface FileService {
