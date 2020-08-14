@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FileUploadDto {
+public class FileRequestUploadDto {
     private String name;
     private Long size;
 }

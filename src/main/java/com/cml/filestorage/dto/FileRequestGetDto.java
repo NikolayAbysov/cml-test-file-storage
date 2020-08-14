@@ -8,8 +8,6 @@ import java.util.List;
 @Getter
 @Setter
 public class FileRequestGetDto {
-    private Long id;
-    private String name;
-    private Long size;
-    private List<String> tagList;
+    private int total;
+    private List<FileDto> list;
 }

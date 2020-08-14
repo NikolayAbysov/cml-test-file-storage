@@ -1,8 +1,9 @@
 package com.cml.filestorage.controller;
 
 import com.cml.filestorage.dto.FileRequestGetDto;
-import com.cml.filestorage.dto.FileTagsDto;
-import com.cml.filestorage.dto.FileUploadDto;
+import com.cml.filestorage.dto.FileResponseOkDto;
+import com.cml.filestorage.dto.FileResponseUploadDto;
+import com.cml.filestorage.dto.FileRequestUploadDto;
 import com.cml.filestorage.mapper.FileMapper;
 import com.cml.filestorage.model.File;
 import com.cml.filestorage.service.FileService;
@@ -29,32 +30,34 @@ public class FileController {
     }
 
     @PostMapping
-    public void uploadFile(@RequestBody FileUploadDto fileUploadDto) {
-        fileService.save(fileMapper.map(fileUploadDto));
+    public FileResponseUploadDto uploadFile(@RequestBody FileRequestUploadDto fileRequestUploadDto) {
+        File file = fileService.save(fileMapper.map(fileRequestUploadDto));
+        return fileMapper.mapResponse(file);
     }
 
     @DeleteMapping("/{Id}")
-    public void deleteFile(@PathVariable String Id){
-        fileService.deleteById(Long.parseLong(Id));
+    public FileResponseOkDto deleteFile(@PathVariable String Id){
+        fileService.deleteById(Id);
+        return new FileResponseOkDto();
     }
 
     @PostMapping("/{Id}/tags")
-    public void assignTags(@PathVariable String Id,
-                           @RequestBody FileTagsDto fileTagsDto) {
-        File file = fileService.getFileById(Long.parseLong(Id));
-        fileService.assignTags(file, fileTagsDto.getTagList());
+    public FileResponseOkDto assignTags(@PathVariable String Id,
+                           @RequestBody List<String> tags) {
+        fileService.assignTags(Id, tags);
+        return new FileResponseOkDto();
     }
 
     @DeleteMapping("/{Id}/tags")
-    public void removeTags(@PathVariable String Id,
-                           @RequestBody FileTagsDto fileTagsDto) {
-        File file = fileService.getFileById(Long.parseLong(Id));
-        fileService.removeTags(file, fileTagsDto.getTagList());
+    public FileResponseOkDto removeTags(@PathVariable String Id,
+                           @RequestBody List<String> tags) {
+        fileService.removeTags(Id, tags);
+        return new FileResponseOkDto();
     }
 
-    @GetMapping()
-    public List<FileRequestGetDto> getFileList(@RequestParam List<String> tagList) {
-        List<File> fileList = fileService.findByTagList(tagList);
+    @GetMapping
+    public FileRequestGetDto getFileList(@RequestParam (defaultValue = "") List<String> tags) {
+        List<File> fileList = fileService.findByTagList(tags);
         return fileMapper.map(fileList);
     }
 }

@@ -9,19 +9,14 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.util.List;
 
-import static org.springframework.data.elasticsearch.annotations.FieldType.Long_Range;
-import static org.springframework.data.elasticsearch.annotations.FieldType.Text;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(indexName = "tag")
+@Document(indexName = "file")
 public class File {
     @Id
-    private Long id;
-    @Field(type = Text)
+    private String id;
     private String name;
-    @Field(type = Long_Range)
     private Long size;
     @Field(type = FieldType.Keyword)
     private List<String> tagList;
