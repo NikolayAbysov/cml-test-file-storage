@@ -9,5 +9,4 @@ class FileStorageApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
