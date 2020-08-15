@@ -8,6 +8,8 @@ import com.cml.filestorage.mapper.FileMapper;
 import com.cml.filestorage.model.File;
 import com.cml.filestorage.service.FileService;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,8 +58,14 @@ public class FileController {
     }
 
     @GetMapping
-    public FileRequestGetDto getFileList(@RequestParam (defaultValue = "") List<String> tags) {
-        List<File> fileList = fileService.find(tags);
+    public FileRequestGetDto getFileList(@RequestParam (defaultValue = "") List<String> tags,
+                                         @RequestParam (value = "page",
+                                                 required = false,
+                                                 defaultValue = "0") Integer page,
+                                         @RequestParam (value = "size",
+                                                 required = false,
+                                                 defaultValue = "10") Integer size) {
+        Page<File> fileList = fileService.find(tags, PageRequest.of(page, size));
         return fileMapper.map(fileList);
     }
 }

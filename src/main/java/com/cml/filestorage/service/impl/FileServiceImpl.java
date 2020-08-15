@@ -8,6 +8,8 @@ import com.cml.filestorage.repository.ElasticFileRepository;
 import com.cml.filestorage.service.FileService;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -71,10 +73,10 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public List<File> find(List<String> tagList) {
+    public Page<File> find(List<String> tagList, Pageable pageable) {
         if (tagList.isEmpty()) {
-            return fileRepository.findAll();
+            return fileRepository.findAll(pageable);
         }
-        return fileRepository.getFilesByTagListIn(tagList);
+        return fileRepository.getFilesByTagListIn(tagList, pageable);
     }
 }

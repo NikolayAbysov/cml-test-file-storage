@@ -52,7 +52,7 @@ public class FileServiceImplTest {
         Mockito.when(fileRepository.save(Mockito.any()))
                 .thenReturn(mockFile);
         File expected = new File("150i7nMB0fZPhytVdG84",
-                "Benio", 256L, List.of("tag1"));
+                "Benio", 256L, List.of("tag1", "tag4"));
         File actual = fileService.save(mockFile);
         assertEquals(expected, actual);
     }
@@ -86,16 +86,6 @@ public class FileServiceImplTest {
         File expected = new File("150i7nMB0fZPhytVdG84",
                 "Benio", 256L, List.of("tag1"));
         File actual = fileService.removeTags("150i7nMB0fZPhytVdG84", mockTagRemoveList);
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void findByTagListOk() {
-        Mockito.when(fileRepository.findAll()).thenReturn(List.of(mockFile));
-        File file = new File("150i7nMB0fZPhytVdG84",
-                "Benio", 256L, List.of("tag1", "tag4"));
-        List<File> expected = List.of(file);
-        List<File> actual = fileService.find(List.of());
         assertEquals(expected, actual);
     }
 }

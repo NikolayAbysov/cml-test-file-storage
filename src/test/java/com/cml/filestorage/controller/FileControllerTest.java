@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -55,28 +54,6 @@ public class FileControllerTest {
         mockFile.setSize(256L);
         mockFile.setName("Benio");
         mockFile.setTagList(List.of("tag3"));
-    }
-
-    @Test
-    public void getFileListOk() throws Exception {
-        Mockito.when(fileMapper.map(Mockito.anyList())).thenReturn(fileRequestGetDto);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/file")
-                .accept(MediaType.APPLICATION_JSON);
-        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
-        String expected = "{" +
-                "    \"total\": 1,\n" +
-                "    \"list\": [\n" +
-                "        {\n" +
-                "            \"id\": \"150i7nMB0fZPhytVdG84\",\n" +
-                "            \"name\": \"Benio\",\n" +
-                "            \"size\": 256,\n" +
-                "            \"tags\": [\n" +
-                "                \"tag3\"\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-        JSONAssert.assertEquals(expected, mvcResult.getResponse().getContentAsString(), false);
     }
 
     @Test
