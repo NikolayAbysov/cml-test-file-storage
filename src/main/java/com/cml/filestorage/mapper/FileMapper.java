@@ -7,6 +7,8 @@ import com.cml.filestorage.dto.FileResponseUploadDto;
 import com.cml.filestorage.model.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.cml.filestorage.util.FileExtensionTagAdder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,6 +18,10 @@ public class FileMapper {
         file.setName(fileRequestUploadDto.getName());
         file.setSize(fileRequestUploadDto.getSize());
         file.setTagList(new ArrayList<>());
+        String tag = FileExtensionTagAdder.getExtensionTag(fileRequestUploadDto.getName());
+        if (tag != null) {
+            file.getTagList().add(tag);
+        }
         return file;
     }
 
