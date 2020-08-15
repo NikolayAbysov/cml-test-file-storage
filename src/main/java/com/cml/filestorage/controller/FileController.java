@@ -57,7 +57,7 @@ public class FileController {
 
     @GetMapping
     public FileRequestGetDto getFileList(@RequestParam (defaultValue = "") List<String> tags) {
-        List<File> fileList = fileService.findByTagList(tags);
+        List<File> fileList = fileService.find(tags);
         return fileMapper.map(fileList);
     }
 }

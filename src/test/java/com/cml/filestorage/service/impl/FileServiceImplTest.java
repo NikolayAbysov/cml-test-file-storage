@@ -95,7 +95,7 @@ public class FileServiceImplTest {
         File file = new File("150i7nMB0fZPhytVdG84",
                 "Benio", 256L, List.of("tag1", "tag4"));
         List<File> expected = List.of(file);
-        List<File> actual = fileService.findByTagList(List.of());
+        List<File> actual = fileService.find(List.of());
         assertEquals(expected, actual);
     }
 }

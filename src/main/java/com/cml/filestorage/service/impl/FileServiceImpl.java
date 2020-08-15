@@ -71,7 +71,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public List<File> findByTagList(List<String> tagList) {
+    public List<File> find(List<String> tagList) {
         if (tagList.isEmpty()) {
             return fileRepository.findAll();
         }

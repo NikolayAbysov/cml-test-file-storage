@@ -12,5 +12,5 @@ public interface FileService {
 
     File removeTags(String id, List<String> tagList);
 
-    List<File> findByTagList(List<String> tagList);
+    List<File> find(List<String> tagList);
 }
