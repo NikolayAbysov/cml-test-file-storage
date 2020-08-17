@@ -2,7 +2,7 @@ package com.cml.filestorage.handler;
 
 import com.cml.filestorage.exception.FileDoesNotExistsException;
 import com.cml.filestorage.exception.InvalidInputException;
-import com.cml.filestorage.exception.TagDoesNotExistsException;
+import com.cml.filestorage.exception.TagException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,7 +20,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({InvalidInputException.class, TagDoesNotExistsException.class})
+    @ExceptionHandler({InvalidInputException.class, TagException.class})
     public ResponseEntity<CustomErrorResponse> springHandleBadRequest(Exception ex) {
         CustomErrorResponse errors = new CustomErrorResponse();
         errors.setError(ex.getMessage());

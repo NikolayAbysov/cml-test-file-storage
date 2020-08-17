@@ -2,10 +2,13 @@ package com.cml.filestorage.service.impl;
 
 import com.cml.filestorage.exception.FileDoesNotExistsException;
 import com.cml.filestorage.exception.InvalidInputException;
-import com.cml.filestorage.exception.TagDoesNotExistsException;
+import com.cml.filestorage.exception.TagException;
 import com.cml.filestorage.model.File;
 import com.cml.filestorage.repository.ElasticFileRepository;
 import com.cml.filestorage.service.FileService;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -41,6 +44,11 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public File assignTags(String id, List<String> tagList) {
+        List<String> listWithoutDuplicates = new ArrayList<>(new HashSet<>(tagList));
+        if (listWithoutDuplicates.size() != tagList.size()) {
+            throw new TagException("duplication tags found");
+        }
+
         Optional<File> fileOptional = fileRepository.findById(id);
         File file;
         if (fileOptional.isPresent()) {
@@ -65,7 +73,7 @@ public class FileServiceImpl implements FileService {
                 fileRepository.save(file);
                 return file;
             } else {
-                throw new TagDoesNotExistsException("tag not found on file");
+                throw new TagException("tag not found on file");
             }
 
         }
