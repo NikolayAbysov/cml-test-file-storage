@@ -4,6 +4,7 @@ import com.cml.filestorage.exception.FileDoesNotExistsException;
 import com.cml.filestorage.exception.InvalidInputException;
 import com.cml.filestorage.model.File;
 import com.cml.filestorage.repository.ElasticFileRepository;
+import lombok.NoArgsConstructor;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -17,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Optional;
 
 @SpringBootTest
+@NoArgsConstructor
 public class FileServiceImplTest {
     private File mockFile;
     private List<String> mockTagAddList;
@@ -26,9 +28,6 @@ public class FileServiceImplTest {
     private ElasticFileRepository fileRepository;
     @InjectMocks
     private FileServiceImpl fileService;
-
-    public FileServiceImplTest() {
-    }
 
     @Before
     public void setUp(){

@@ -10,6 +10,7 @@ import com.cml.filestorage.model.File;
 import com.cml.filestorage.service.FileService;
 import java.util.List;
 import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.validation.BindingResult;
@@ -24,14 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/file")
+@RequiredArgsConstructor
 public class FileController {
     private final FileService fileService;
     private final FileMapper fileMapper;
-
-    public FileController(FileService fileService, FileMapper fileMapper) {
-        this.fileService = fileService;
-        this.fileMapper = fileMapper;
-    }
 
     @PostMapping
     public FileResponseUploadDto uploadFile(
