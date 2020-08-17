@@ -13,4 +13,6 @@ public interface ElasticFileRepository extends ElasticsearchRepository<File, Str
     Page<File> getFilesByTagListIn(List<String> tagList, Pageable pageable);
 
     Page<File> findAll(Pageable pageable);
+
+    boolean existsById(String id);
 }
