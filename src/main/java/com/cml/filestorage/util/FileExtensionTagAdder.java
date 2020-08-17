@@ -30,8 +30,9 @@ public class FileExtensionTagAdder {
         for (Map.Entry<String, String> entry : filesExtensionMap.entrySet()) {
             if (fileName.endsWith(entry.getKey())) {
                 tagValue = entry.getValue();
+                return Optional.of(tagValue);
             }
         }
-        return Optional.of(tagValue);
+        return Optional.empty();
     }
 }
