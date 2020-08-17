@@ -7,8 +7,8 @@ import com.cml.filestorage.mapper.FileMapper;
 import com.cml.filestorage.model.File;
 import com.cml.filestorage.service.FileService;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -16,7 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -24,10 +24,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(value = FileController.class)
-public class FileControllerTest {
-    private FileRequestGetDto fileRequestGetDto;
+class FileControllerTest {
     private File mockFile;
 
     @Autowired
@@ -38,14 +37,14 @@ public class FileControllerTest {
     private FileService fileService;
 
     @Before
-    public void setUp() {
+    void setUp() {
         FileDto fileDto = new FileDto();
         fileDto.setId("150i7nMB0fZPhytVdG84");
         fileDto.setName("Benio");
         fileDto.setSize(256L);
         fileDto.setTags(List.of("tag3"));
 
-        fileRequestGetDto = new FileRequestGetDto();
+        FileRequestGetDto fileRequestGetDto = new FileRequestGetDto();
         fileRequestGetDto.setTotal(1);
         fileRequestGetDto.setList(List.of(fileDto));
 
@@ -57,7 +56,7 @@ public class FileControllerTest {
     }
 
     @Test
-    public void uploadFileOk() throws Exception {
+    void uploadFileOk() throws Exception {
         Mockito.when(fileService.save(Mockito.any())).thenReturn(mockFile);
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/file")
                 .accept(MediaType.APPLICATION_JSON)
@@ -69,7 +68,7 @@ public class FileControllerTest {
     }
 
     @Test
-    public void uploadFileNotOk() throws Exception {
+    void uploadFileNotOk() throws Exception {
         Mockito.when(fileService.save(Mockito.any()))
                 .thenThrow(new InvalidInputException("File has incorrect name or size"));
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/file")
@@ -82,7 +81,7 @@ public class FileControllerTest {
     }
 
     @Test
-    public void deleteFileOk() throws Exception {
+    void deleteFileOk() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .delete("/file/150i7nMB0fZPhytVdG84")
                 .accept(MediaType.APPLICATION_JSON);
@@ -92,7 +91,7 @@ public class FileControllerTest {
     }
 
     @Test
-    public void assignTagsOk() throws Exception {
+    void assignTagsOk() throws Exception {
         Mockito.when(fileService.assignTags(Mockito.any(), Mockito.anyList()))
                 .thenReturn(mockFile);
         RequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -106,7 +105,7 @@ public class FileControllerTest {
     }
 
     @Test
-    public void removeTagsOk() throws Exception {
+    void removeTagsOk() throws Exception {
         Mockito.when(fileService.removeTags(Mockito.any(), Mockito.anyList()))
                 .thenReturn(mockFile);
         RequestBuilder requestBuilder = MockMvcRequestBuilders
