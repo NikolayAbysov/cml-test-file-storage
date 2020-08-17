@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 class CustomErrorResponse {
-    private String success;
+    private boolean success;
     private String error;
 }

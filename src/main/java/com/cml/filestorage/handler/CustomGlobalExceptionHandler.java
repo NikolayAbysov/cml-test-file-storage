@@ -16,7 +16,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     public ResponseEntity<CustomErrorResponse> springHandleNotFound(Exception ex) {
         CustomErrorResponse errors = new CustomErrorResponse();
         errors.setError(ex.getMessage());
-        errors.setSuccess("false");
+        errors.setSuccess(false);
         return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
     }
 
@@ -24,7 +24,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     public ResponseEntity<CustomErrorResponse> springHandleBadRequest(Exception ex) {
         CustomErrorResponse errors = new CustomErrorResponse();
         errors.setError(ex.getMessage());
-        errors.setSuccess("false");
+        errors.setSuccess(false);
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }
