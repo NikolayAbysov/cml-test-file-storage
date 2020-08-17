@@ -25,8 +25,11 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public File save(File file) {
-        if (file.getSize() <= 0 || file.getName().length() == 0) {
-            throw new InvalidInputException("File has incorrect name or size");
+        if (file.getSize() <= 0) {
+            throw new InvalidInputException("File has incorrect size");
+        }
+        if (file.getName().length() == 0) {
+            throw new InvalidInputException("File has incorrect name");
         }
         return fileRepository.save(file);
     }
