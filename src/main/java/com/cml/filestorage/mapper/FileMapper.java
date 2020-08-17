@@ -8,16 +8,14 @@ import com.cml.filestorage.model.File;
 import com.cml.filestorage.util.FileExtensionTagAdder;
 import java.util.ArrayList;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class FileMapper {
     private final FileExtensionTagAdder fileExtensionTagAdder;
-
-    public FileMapper(FileExtensionTagAdder fileExtensionTagAdder) {
-        this.fileExtensionTagAdder = fileExtensionTagAdder;
-    }
 
     public File map(FileRequestUploadDto fileRequestUploadDto) {
         File file = new File();

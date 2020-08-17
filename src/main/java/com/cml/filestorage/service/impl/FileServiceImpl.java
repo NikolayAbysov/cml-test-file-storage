@@ -10,18 +10,15 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class FileServiceImpl implements FileService {
-
     private final ElasticFileRepository fileRepository;
-
-    public FileServiceImpl(ElasticFileRepository fileRepository) {
-        this.fileRepository = fileRepository;
-    }
 
     @Override
     public File save(File file) {
