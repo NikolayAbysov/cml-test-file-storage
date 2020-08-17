@@ -2,13 +2,14 @@ package com.cml.filestorage.util;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 @Component
 public class FileExtensionTagAdder {
-    private static Map<String, String> filesExtensionMap;
+    private Map<String, String> filesExtensionMap;
 
-    static {
+    {
         filesExtensionMap = new HashMap<>();
         filesExtensionMap.put(".mp3", "audio");
         filesExtensionMap.put(".wav", "audio");
@@ -24,12 +25,13 @@ public class FileExtensionTagAdder {
 
     }
 
-    public static String getExtensionTag(String fileName) {
+    public Optional<String> getExtensionTag(String fileName) {
+        String tagValue = null;
         for (Map.Entry<String, String> entry : filesExtensionMap.entrySet()) {
-            if (fileName.contains(entry.getKey())) {
-                return entry.getValue();
+            if (fileName.endsWith(entry.getKey())) {
+                tagValue = entry.getValue();
             }
         }
-        return null;
+        return Optional.of(tagValue);
     }
 }
