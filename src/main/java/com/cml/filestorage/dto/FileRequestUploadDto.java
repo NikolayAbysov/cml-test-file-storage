@@ -7,8 +7,8 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class FileRequestUploadDto {
-    @NotNull(message = "file name is mandatory")
+    @NotNull
     private String name;
-    @NotNull(message = "file size is mandatory")
+    @NotNull
     private Long size;
 }
