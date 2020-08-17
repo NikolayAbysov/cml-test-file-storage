@@ -33,8 +33,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void deleteById(String id) {
-        Optional<File> fileOptional = fileRepository.findById(id);
-        if (fileOptional.isPresent()) {
+        if (fileRepository.existsById(id)) {
             fileRepository.deleteById(id);
         } else {
             throw new FileDoesNotExistsException("file not found");
