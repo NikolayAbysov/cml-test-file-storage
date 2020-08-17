@@ -7,6 +7,7 @@ import com.cml.filestorage.repository.ElasticFileRepository;
 import lombok.NoArgsConstructor;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -56,16 +57,20 @@ public class FileServiceImplTest {
         assertEquals(expected, actual);
     }
 
-    @Test(expected = InvalidInputException.class)
+    @Test
     public void saveNotOk() {
         File file = new File();
         file.setSize(0L);
-        fileService.save(file);
+        Assertions.assertThrows(InvalidInputException.class, () -> {
+            fileService.save(file);;
+        });
     }
 
-    @Test(expected = FileDoesNotExistsException.class)
+    @Test
     public void deleteByIdNotOk() {
-        fileService.deleteById("");
+        Assertions.assertThrows(FileDoesNotExistsException.class, () -> {
+            fileService.deleteById("");
+        });
     }
 
     @Test
