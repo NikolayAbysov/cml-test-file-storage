@@ -12,12 +12,11 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(indexName = "file")
+@Document(indexName = "files")
 public class File {
     @Id
     private String id;
     private String name;
     private Long size;
-    @Field(type = FieldType.Keyword)
     private List<String> tagList;
 }

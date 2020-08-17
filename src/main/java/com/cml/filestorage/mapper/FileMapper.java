@@ -34,7 +34,7 @@ public class FileMapper {
         for (File file : fileList) {
             dto.getList().add(map(file));
         }
-        dto.setTotal(dto.getList().size());
+        dto.setTotal((int) fileList.getTotalElements());
         return dto;
     }
 
