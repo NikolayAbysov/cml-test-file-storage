@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.StringJoiner;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -83,6 +84,15 @@ public class FileServiceImpl implements FileService {
         if (tagList.isEmpty()) {
             return fileRepository.findAll(pageable);
         }
-        return fileRepository.getFilesByTagListIn(tagList, pageable);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        StringJoiner stringJoiner = new StringJoiner(" AND ");
+        for (String tag : tagList) {
+            stringBuilder.append("tagList:");
+            stringBuilder.append(tag);
+            stringJoiner.add(stringBuilder.toString());
+            stringBuilder.setLength(0);
+        }
+        return fileRepository.searchInTagList("(" + stringJoiner.toString() + ")", pageable);
     }
 }
