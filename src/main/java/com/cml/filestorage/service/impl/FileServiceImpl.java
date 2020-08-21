@@ -11,8 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.StringJoiner;
-import java.util.function.Supplier;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -99,6 +97,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public File getById(String id) {
-        return fileRepository.findById(id).orElseThrow(() -> new FileDoesNotExistsException("file not found"));
+        return fileRepository.findById(id)
+                .orElseThrow(() -> new FileDoesNotExistsException("file not found"));
     }
 }

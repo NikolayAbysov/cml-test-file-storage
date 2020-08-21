@@ -52,8 +52,8 @@ public class FileServiceImplTest {
     public void saveOk() {
         Mockito.when(fileRepository.save(Mockito.any()))
                 .thenReturn(mockFile);
-        File expected = new File("150i7nMB0fZPhytVdG84",
-                "Benio", 256L, List.of("tag1", "tag4"));
+        File expected = new File(mockFile.getId(),
+                mockFile.getName(), mockFile.getSize(), List.of("tag1", "tag4"));
         File actual = fileService.save(mockFile);
         assertEquals(expected, actual);
     }
@@ -79,8 +79,8 @@ public class FileServiceImplTest {
         Optional<File> mockOptional = Optional.of(mockFile);
         Mockito.when(fileRepository.findById(Mockito.any())).thenReturn(mockOptional);
         File expected = new File(mockFile.getId(),
-                mockFile.getName(), 256L, List.of("tag1", "tag4", "tag2", "tag3"));
-        File actual = fileService.assignTags("150i7nMB0fZPhytVdG84", mockTagAddList);
+                mockFile.getName(), mockFile.getSize(), mockFile.getTagList());
+        File actual = fileService.assignTags(mockFile.getId(), mockTagAddList);
         assertEquals(expected, actual);
     }
 
@@ -90,7 +90,7 @@ public class FileServiceImplTest {
         Mockito.when(fileRepository.findById(Mockito.any())).thenReturn(mockOptional);
         File expected = new File(mockFile.getId(),
                 mockFile.getName(), 256L, List.of("tag1"));
-        File actual = fileService.removeTags("150i7nMB0fZPhytVdG84", mockTagRemoveList);
+        File actual = fileService.removeTags(mockFile.getId(), mockTagRemoveList);
         assertEquals(expected, actual);
     }
 
