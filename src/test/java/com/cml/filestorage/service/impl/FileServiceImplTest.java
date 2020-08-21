@@ -5,6 +5,7 @@ import com.cml.filestorage.exception.InvalidInputException;
 import com.cml.filestorage.model.File;
 import com.cml.filestorage.repository.ElasticFileRepository;
 import lombok.NoArgsConstructor;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -77,8 +78,8 @@ public class FileServiceImplTest {
     public void assignTagsOk() {
         Optional<File> mockOptional = Optional.of(mockFile);
         Mockito.when(fileRepository.findById(Mockito.any())).thenReturn(mockOptional);
-        File expected = new File("150i7nMB0fZPhytVdG84",
-                "Benio", 256L, List.of("tag1", "tag4", "tag2", "tag3"));
+        File expected = new File(mockFile.getId(),
+                mockFile.getName(), 256L, List.of("tag1", "tag4", "tag2", "tag3"));
         File actual = fileService.assignTags("150i7nMB0fZPhytVdG84", mockTagAddList);
         assertEquals(expected, actual);
     }
@@ -87,9 +88,24 @@ public class FileServiceImplTest {
     public void removeTagsOk() {
         Optional<File> mockOptional = Optional.of(mockFile);
         Mockito.when(fileRepository.findById(Mockito.any())).thenReturn(mockOptional);
-        File expected = new File("150i7nMB0fZPhytVdG84",
-                "Benio", 256L, List.of("tag1"));
+        File expected = new File(mockFile.getId(),
+                mockFile.getName(), 256L, List.of("tag1"));
         File actual = fileService.removeTags("150i7nMB0fZPhytVdG84", mockTagRemoveList);
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getByIdOk() {
+        Optional<File> expected = Optional.of(mockFile);
+        Mockito.when(fileRepository.findById(Mockito.any())).thenReturn(expected);
+        File actual = fileService.getById(mockFile.getId());
+        Assert.assertEquals(expected.get(), actual);
+    }
+
+    @Test
+    public void getByIdNotOk() {
+        Assertions.assertThrows(FileDoesNotExistsException.class, () -> {
+            fileService.getById("none");
+        });
     }
 }

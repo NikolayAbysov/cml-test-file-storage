@@ -2,11 +2,12 @@ package com.cml.filestorage.controller;
 
 import com.cml.filestorage.dto.FileDto;
 import com.cml.filestorage.dto.FileRequestGetDto;
+import com.cml.filestorage.exception.FileDoesNotExistsException;
 import com.cml.filestorage.exception.InvalidInputException;
 import com.cml.filestorage.mapper.FileMapper;
 import com.cml.filestorage.model.File;
 import com.cml.filestorage.service.FileService;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -36,7 +37,7 @@ class FileControllerTest {
     @MockBean
     private FileService fileService;
 
-    @Before
+    @BeforeEach
     void setUp() {
         FileDto fileDto = new FileDto();
         fileDto.setId("150i7nMB0fZPhytVdG84");
@@ -83,7 +84,7 @@ class FileControllerTest {
     @Test
     void deleteFileOk() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .delete("/file/150i7nMB0fZPhytVdG84")
+                .delete("/file/" + mockFile.getId())
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
@@ -95,7 +96,7 @@ class FileControllerTest {
         Mockito.when(fileService.assignTags(Mockito.any(), Mockito.anyList()))
                 .thenReturn(mockFile);
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post("/file/KKt48XMBFb4XKQ4EMG8w/tags")
+                .post("/file/" + mockFile.getId() +"/tags")
                 .accept(MediaType.APPLICATION_JSON)
                 .content("[\"tag1\", \"tag2\", \"tag3\"]")
                 .contentType(MediaType.APPLICATION_JSON);
@@ -109,12 +110,34 @@ class FileControllerTest {
         Mockito.when(fileService.removeTags(Mockito.any(), Mockito.anyList()))
                 .thenReturn(mockFile);
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .delete("/file/KKt48XMBFb4XKQ4EMG8w/tags")
+                .delete("/file/" + mockFile.getId() + "/tags")
                 .accept(MediaType.APPLICATION_JSON)
                 .content("[\"tag1\", \"tag2\", \"tag3\"]")
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         assertEquals(HttpStatus.OK.value(), response.getStatus());
+    }
+
+    @Test
+    void getFilePropertiesOk() throws Exception {
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/file/" + mockFile.getId())
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+    }
+
+    @Test
+    void getFilePropertiesNotOk() throws Exception {
+        Mockito.when(fileService.getById(Mockito.any()))
+                .thenThrow(new FileDoesNotExistsException("file not found"));
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/file/" + mockFile.getId())
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
     }
 }

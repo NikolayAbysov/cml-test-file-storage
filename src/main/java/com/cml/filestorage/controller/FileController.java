@@ -1,5 +1,6 @@
 package com.cml.filestorage.controller;
 
+import com.cml.filestorage.dto.FileDto;
 import com.cml.filestorage.dto.FileRequestGetDto;
 import com.cml.filestorage.dto.FileRequestUploadDto;
 import com.cml.filestorage.dto.FileResponseOkDto;
@@ -9,6 +10,7 @@ import com.cml.filestorage.mapper.FileMapper;
 import com.cml.filestorage.model.File;
 import com.cml.filestorage.service.FileService;
 import java.util.List;
+import java.util.Optional;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -71,5 +73,11 @@ public class FileController {
                                                  defaultValue = "10") Integer size) {
         Page<File> fileList = fileService.find(tags, PageRequest.of(page, size));
         return fileMapper.map(fileList);
+    }
+
+    @GetMapping("/{id}")
+    public FileDto getFileProperties(@PathVariable String id) {
+        File file = fileService.getById(id);
+        return fileMapper.map(file);
     }
 }
