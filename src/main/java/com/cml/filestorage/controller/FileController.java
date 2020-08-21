@@ -1,5 +1,6 @@
 package com.cml.filestorage.controller;
 
+import com.cml.filestorage.dto.FileDto;
 import com.cml.filestorage.dto.FileRequestGetDto;
 import com.cml.filestorage.dto.FileRequestUploadDto;
 import com.cml.filestorage.dto.FileResponseOkDto;
@@ -71,5 +72,11 @@ public class FileController {
                                                  defaultValue = "10") Integer size) {
         Page<File> fileList = fileService.find(tags, PageRequest.of(page, size));
         return fileMapper.map(fileList);
+    }
+
+    @GetMapping("/{id}")
+    public FileDto getFileProperties(@PathVariable String id) {
+        File file = fileService.getById(id);
+        return fileMapper.map(file);
     }
 }

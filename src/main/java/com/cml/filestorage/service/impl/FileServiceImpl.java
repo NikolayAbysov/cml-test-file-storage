@@ -74,7 +74,6 @@ public class FileServiceImpl implements FileService {
             } else {
                 throw new TagException("tag not found on file");
             }
-
         }
         throw new FileDoesNotExistsException("file not found");
     }
@@ -94,5 +93,11 @@ public class FileServiceImpl implements FileService {
             stringBuilder.setLength(0);
         }
         return fileRepository.searchInTagList("(" + stringJoiner.toString() + ")", pageable);
+    }
+
+    @Override
+    public File getById(String id) {
+        return fileRepository.findById(id)
+                .orElseThrow(() -> new FileDoesNotExistsException("file not found"));
     }
 }

@@ -38,7 +38,7 @@ public class FileMapper {
         return dto;
     }
 
-    private FileDto map(File file) {
+    public FileDto map(File file) {
         FileDto dto = new FileDto();
         dto.setId(file.getId());
         dto.setName(file.getName());

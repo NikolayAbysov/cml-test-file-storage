@@ -15,4 +15,6 @@ public interface FileService {
     File removeTags(String id, List<String> tagList);
 
     Page<File> find(List<String> tagList, Pageable pageable);
+
+    File getById(String id);
 }
